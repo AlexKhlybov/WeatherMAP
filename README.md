@@ -63,33 +63,57 @@ To run the program, type in the console:
 $ uvicorn main:app --reload
 ```
 
+Add records to the database.
+First, let's go to [Swagger UI](http://127.0.0.1:8000/docs#/default/town_create_api_town__post).
+You can copy the entries below or enter your cities:
+```
+{
+    "name": "Ufa",
+    "longitude": 56.4,
+    "latitude": 54.49
+}
+{
+    "name": "Moskow",
+    "longitude": 37.37,
+    "latitude": 55.45
+}
+{
+    "name": "Izhevsk",
+    "longitude": 53.13,
+    "latitude": 56.51
+}
+```
+
+To view the weather forecast for the entered cities, go to the main page - [Home page](http://127.0.0.1:8000)
+
+
 
 ## REST-API interactions
-Use [Swagger UI](https://swagger.io/tools/swagger-ui/) or [cUrl](https://curl.se/) utility to manipulate tasks. Below is an example of using the cUrl utility:
+Use [Swagger UI](https://swagger.io/tools/swagger-ui/) or [cUrl](https://curl.se/) utility to manipulate towns. Below is an example of using the cUrl utility:
 
-**GET the List of todos**
+**GET the List of towns**
 ```
-curl -H 'Content-Type: application/json' -X 'GET' 'http://127.0.0.1:5000/api/task/'
+curl -H 'Content-Type: application/json' -X 'GET' 'http://127.0.0.1:8000/api/town/'
 ```
 
 **GET an individual todo**
 ```
-curl -H 'Content-Type: application/json' -X 'GET' 'http://127.0.0.1:5000/api/task/<ID>'
+curl -H 'Content-Type: application/json' -X 'GET' 'http://127.0.0.1:8000/api/town/{town_id}'
 ```
 
 **POST a todo**
 ```
-curl -H 'Content-Type: application/json' -d '{"title":"Dinner", "content":"Having Dinner"}' -X 'POST' 'http://127.0.0.1:5000/api/task/'
+curl -H 'Content-Type: application/json' -d '{"title":"Dinner", "content":"Having Dinner"}' -X 'POST' 'http://127.0.0.1:8000/api/town/'
 ```
 
 **UPDATE a todo**
 ```
-curl -H 'Content-Type: application/json' -d '{"title":"Dinner", "content":"Having Dinner"}' -X 'PUT' 'http://127.0.0.1:5000/api/task/<ID>'
+curl -H 'Content-Type: application/json' -d '{"title":"Dinner", "content":"Having Dinner"}' -X 'PUT' 'http://127.0.0.1:8000/api/town/{town_id}'
 ```
 
 **DELETE a todo**
 ```
-curl -H 'Content-Type: application/json' -X 'DELETE' 'http://127.0.0.1:5000/api/task/<ID>'
+curl -H 'Content-Type: application/json' -X 'DELETE' 'http://127.0.0.1:8000/api/town/{town_id}'
 ```
 
 
