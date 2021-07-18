@@ -53,25 +53,14 @@ $ source env/bin/activate  # use `env\Scripts\activate` on Windows
 $ pip install -r requirements.txt
 ```
 
-Use `docker-compose` to connect the database:
+We carry out migrations:
 ```
-$ docker-compose up
-```
-or detached mode:
-```
-$ docker-compose up -d
+$ alembic upgrade head
 ```
 
 To run the program, type in the console:
 ```
-$ flask run
-```
-
-We carry out migrations:
-```
-$ flask db stamp head
-$ flask db migrate
-$ flask db upgrade
+$ uvicorn main:app --reload
 ```
 
 

@@ -157,3 +157,6 @@ tmp/
 
 # File PostgreSQL
 postgresql
+
+# Fake db
+fake_bd.json

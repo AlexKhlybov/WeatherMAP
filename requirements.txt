@@ -1,0 +1,8 @@
+fastapi
+aiohttp
+alembic
+asyncpg
+uvicorn[standard]
+
+jinja2
+icecream
