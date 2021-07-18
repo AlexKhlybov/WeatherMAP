@@ -3,6 +3,8 @@ aiohttp
 alembic
 asyncpg
 uvicorn[standard]
+pytest
+requests
 
 jinja2
 icecream

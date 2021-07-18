@@ -24,4 +24,4 @@ class Town(Base):
     def __repr__(self):
         return f"<Town {self.name} (lon: {self.longitude}; lat: {self.latitude})>"
 
-# Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)

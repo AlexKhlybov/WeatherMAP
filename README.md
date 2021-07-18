@@ -26,15 +26,10 @@ This is a **TodoGARPIX** was completed as part of the test task when applying fo
 ## Environment
 Env file in the root of the project and add the following (example) to it:
 ```
-FLASK_APP=run.py
-FLASK_ENV=testing
+TESTING=False
 
-SECRET_KEY=secretsecretsecretsecretsecretsecretsecretsecretsecret
-POSTGRES_DB=db
-POSTGRES_USER=post
-POSTGRES_PASSWORD=post
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
+WEATHER_LANG="ru-RU"
+YANDEX_KEY="BigSecret!!!"
 ```
 
 
@@ -117,36 +112,39 @@ curl -H 'Content-Type: application/json' -X 'DELETE' 'http://127.0.0.1:8000/api/
 ```
 
 
-## UnitTEST
-To run the tests, you can use [unittest2](https://pypi.org/project/unittest2/) as following:
+## Pytest
+To run the tests, you can use [pytest](https://docs.pytest.org/) as following:
 
-First, let's change the mode to test, to do this, in the `.env` file, replace the value of the `FLASK_ENV` variable:
+First, let's change the mode to test, to do this, in the `.env` file, replace the value of the `TESTING` variable:
 ```
 ...
-FLASK_ENV=testing
+TESTING=True
 ...
 ```
 
 Next, we raise the application with the command familiar to us:
 ```
-$ flask run
+$ pytest
 ```
 
 ```bash
-$ python3 -m unittest discover tests
-.......
-----------------------------------------------------------------------
-Ran 7 tests in 0.200s
+$ pytest
+============================= test session starts ==============================
+platform darwin -- Python 3.9.6, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
+rootdir: /Users/macak/Documents/py_proj/WeatherMAP
+collected 9 items                                                              
 
-OK
+tests/test_api.py .........                                              [100%]
+
+============================== 9 passed in 1.08s ===============================
 ```
 
 
 ## ATTENTION! 
-To run in development mode, replace the variable with `development`:
+To run in development mode, replace the variable with `False`:
 ```
 ...
-FLASK_ENV=development
+TESTING=False
 ...
 ```
 
