@@ -29,6 +29,7 @@ TESTING=False
 WEATHER_LANG="ru-RU"
 YANDEX_KEY="BigSecret!!!"
 ```
+Be sure to enter the `YANDEX_KEY`, otherwise the application will not work. You can get it here - [Yandex API Weather](https://yandex.ru/dev/weather/doc/dg/concepts/forecast-info.html).
 
 ## Getting started
 clone:
