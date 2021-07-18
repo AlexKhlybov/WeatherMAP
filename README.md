@@ -1,5 +1,7 @@
 # A Weather Map app
 
+![Screenshot](icon.png)
+
 <p align="left">
 <a href="https://github.com/psf/black/blob/main/LICENSE"><img alt="License: MIT" src="https://black.readthedocs.io/en/stable/_static/license.svg"></a>
 <a href="https://pycqa.github.io/isortE"><img alt="Imports: isort" src="https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336"></a>
@@ -12,15 +14,15 @@
 
 
 ## What is this?
-This is a **TodoGARPIX** was completed as part of the test task when applying for an internship at GARPIX.
+An application with the functionality of obtaining weather data by coordinates via API from a third-party service.
 
 
 ## What can?
-- see the list of tasks
-- create a new task
-- detailed task overview
-- change one task
-- delete task
+- see the list of town
+- create a new town
+- detailed town overview
+- change one town
+- delete town
 
 
 ## Environment
@@ -31,7 +33,6 @@ TESTING=False
 WEATHER_LANG="ru-RU"
 YANDEX_KEY="BigSecret!!!"
 ```
-
 
 ## Getting started
 clone:
