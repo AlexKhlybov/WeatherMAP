@@ -5,6 +5,8 @@ asyncpg
 uvicorn[standard]
 pytest
 requests
+black
+isort
 
 jinja2
 icecream

@@ -1,15 +1,12 @@
-from app.models.database import SessionLocal
-from app.schemas.towns import DetailTownModel, TownModel
-from app.api.api import get_town, get_all_town, create_town, update_town, delete_town
-
-from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.templating import Jinja2Templates
-
-
-from app.utils.weather import get_weater
 from icecream import ic
+from sqlalchemy.orm import Session
 
+from app.api.api import create_town, delete_town, get_all_town, get_town, update_town
+from app.models.database import SessionLocal
+from app.schemas.towns import DetailTownModel, TownModel
+from app.utils.weather import get_weater
 
 templates = Jinja2Templates(directory="templates")
 app = APIRouter()
@@ -22,26 +19,32 @@ def get_db():
     finally:
         db.close()
 
+
 responses = {
     404: {
         "description": "Item not found!",
         "content": {
-                "application/json": {
-                    "example": {"message": "Item not found!",}
+            "application/json": {
+                "example": {
+                    "message": "Item not found!",
                 }
             }
         },
+    },
 }
+
 
 @app.post("/api/town/", response_model=DetailTownModel, status_code=201)
 def town_create(town: TownModel, db: Session = Depends(get_db)):
     return create_town(db=db, data=town)
 
 
-@app.get("/api/town/", responses={
-    200: {
-        "description": "OK!",
-        "content": {
+@app.get(
+    "/api/town/",
+    responses={
+        200: {
+            "description": "OK!",
+            "content": {
                 "application/json": {
                     "example": [
                         {
@@ -53,11 +56,13 @@ def town_create(town: TownModel, db: Session = Depends(get_db)):
                             "id": 7,
                             "name": "string",
                             "...": "...",
-                        },]
-                    }
+                        },
+                    ]
                 }
             },
-        })
+        },
+    },
+)
 def town_list(db: Session = Depends(get_db)):
     return get_all_town(db=db)
 

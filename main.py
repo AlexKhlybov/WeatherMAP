@@ -1,9 +1,8 @@
 import uvicorn
-from app.routers import routers
-# from app.views import views    
+
 from fastapi import FastAPI
 
-import aiohttp
+from app.routers import routers
 
 app = FastAPI()
 

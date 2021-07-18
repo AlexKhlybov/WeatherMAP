@@ -48,11 +48,6 @@ $ source env/bin/activate  # use `env\Scripts\activate` on Windows
 $ pip install -r requirements.txt
 ```
 
-We carry out migrations:
-```
-$ alembic upgrade head
-```
-
 To run the program, type in the console:
 ```
 $ uvicorn main:app --reload
