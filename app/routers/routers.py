@@ -99,29 +99,30 @@ async def town_list(db: Session = Depends(get_db)):
             },
         }, status_code=200)
 async def town_detail(town_id: int, db: Session = Depends(get_db)):
-    town = get_town(db=db, id=town_id)
-    await get_weater(db=db, item=town)
+    town = get_town(db=db, town_id=town_id)
     if town is None:
         raise HTTPException(status_code=404, detail="Town not found")
-    return town
+    else:
+        await get_weater(db=db, item=town)
+        return town
 
 
 @app.put("/api/town/{town_id}", response_model=DetailTownModel, status_code=202, responses={**responses})
 def town_update(town_id: int, data: TownModel, db: Session = Depends(get_db)):
-    town = get_town(db=db, id=town_id)
+    town = get_town(db=db, town_id=town_id)
     if town is None:
         raise HTTPException(status_code=404, detail="Town not found!")
     else:
-        return update_town(db=db, id=town_id, data=data)
+        return update_town(db=db, town_id=town_id, data=data)
 
 
 @app.delete("/api/town/{town_id}", responses={**responses}, status_code=202)
 def town_delete(town_id: int, db: Session = Depends(get_db)):
-    town = get_town(db=db, id=town_id)
+    town = get_town(db=db, town_id=town_id)
     if town is None:
         raise HTTPException(status_code=404, detail="Town not found!")
     else:
-        delete_town(db=db, id=town_id)
+        delete_town(db=db, town_id=town_id)
 
 
 @app.get("/")

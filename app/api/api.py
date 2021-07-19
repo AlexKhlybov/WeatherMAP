@@ -20,20 +20,29 @@ def create_town(db: Session, data):
 
 def get_town(db: Session, town_id: int):
     town = db.query(Town).filter(Town.id == town_id).first()
-    return town.get_dict
+    if town:
+        return town.get_dict
+    else:
+        return None
 
 
 def update_town(db: Session, town_id: int, data: dict):
     town = db.query(Town).filter(Town.id == town_id).first()
-    town.name = data.name
-    town.longitude = data.longitude
-    town.latitude = data.latitude
-    db.add(town)
-    db.commit()
-    return town
-
+    if town:
+        town.name = data.name
+        town.longitude = data.longitude
+        town.latitude = data.latitude
+        db.add(town)
+        db.commit()
+        return town.get_dict
+    else:
+        return None
+    
 
 def delete_town(db: Session, town_id: int):
     task = db.query(Town).filter(Town.id == town_id).first()
-    db.delete(task)
-    db.commit()
+    if task:
+        db.delete(task)
+        db.commit()
+    else: 
+        return None
