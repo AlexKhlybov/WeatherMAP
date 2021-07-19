@@ -1,11 +1,10 @@
 import json
 
 import aiohttp
+from icecream import ic
 
 from app.config import WEATHER_LANG, YANDEX_KEY
 from app.models.towns import Town
-
-from icecream import ic
 
 
 async def get_weater(db, item):

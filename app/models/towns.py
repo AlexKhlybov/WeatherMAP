@@ -24,7 +24,7 @@ class Town(Base):
 
     def __repr__(self):
         return f"<Town {self.name} (lon: {self.longitude}; lat: {self.latitude})>"
-    
+
     @property
     def get_dict(self):
         result = result = {
@@ -35,7 +35,7 @@ class Town(Base):
             "current_weather": self.current_weather,
             "forecast_weather": loads(self.forecast_weather),
             "create_at": self.create_at,
-            }
+        }
         return result
 
 

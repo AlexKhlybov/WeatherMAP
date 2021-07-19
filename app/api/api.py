@@ -37,12 +37,12 @@ def update_town(db: Session, town_id: int, data: dict):
         return town.get_dict
     else:
         return None
-    
+
 
 def delete_town(db: Session, town_id: int):
     task = db.query(Town).filter(Town.id == town_id).first()
     if task:
         db.delete(task)
         db.commit()
-    else: 
+    else:
         return None

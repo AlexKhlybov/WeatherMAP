@@ -72,12 +72,15 @@ async def town_list(db: Session = Depends(get_db)):
     return towns
 
 
-@app.get("/api/town/{town_id}", responses={
-    **responses, 200: {
+@app.get(
+    "/api/town/{town_id}",
+    responses={
+        **responses,
+        200: {
             "description": "OK!",
             "content": {
                 "application/json": {
-                    "example":{
+                    "example": {
                         "id": 1,
                         "name": "Moskow",
                         "longitude": 37.37,
@@ -90,14 +93,16 @@ async def town_list(db: Session = Depends(get_db)):
                             "2021-07-22": 21,
                             "2021-07-23": 23,
                             "2021-07-24": 22,
-                            "2021-07-25": 23
+                            "2021-07-25": 23,
                         },
-                        "create_at": "2021-07-19T12:47:34.709784"
-                        }
+                        "create_at": "2021-07-19T12:47:34.709784",
                     }
-                },
+                }
             },
-        }, status_code=200)
+        },
+    },
+    status_code=200,
+)
 async def town_detail(town_id: int, db: Session = Depends(get_db)):
     town = get_town(db=db, town_id=town_id)
     if town is None:
