@@ -90,22 +90,22 @@ Use [Swagger UI](https://swagger.io/tools/swagger-ui/) or [cUrl](https://curl.se
 curl -H 'Content-Type: application/json' -X 'GET' 'http://127.0.0.1:8000/api/town/'
 ```
 
-**GET an individual todo**
+**GET an individual town**
 ```
 curl -H 'Content-Type: application/json' -X 'GET' 'http://127.0.0.1:8000/api/town/{town_id}'
 ```
 
-**POST a todo**
+**POST a town**
 ```
-curl -H 'Content-Type: application/json' -d '{"title":"Dinner", "content":"Having Dinner"}' -X 'POST' 'http://127.0.0.1:8000/api/town/'
-```
-
-**UPDATE a todo**
-```
-curl -H 'Content-Type: application/json' -d '{"title":"Dinner", "content":"Having Dinner"}' -X 'PUT' 'http://127.0.0.1:8000/api/town/{town_id}'
+curl -H 'Content-Type: application/json' -d '{"name": "Ufa", "longitude": 56.4, "latitude": 54.49}' -X 'POST' 'http://127.0.0.1:8000/api/town/'
 ```
 
-**DELETE a todo**
+**UPDATE a town**
+```
+curl -H 'Content-Type: application/json' -d '{"name": "Ufa", "longitude": 56.4, "latitude": 54.49}' -X 'PUT' 'http://127.0.0.1:8000/api/town/{town_id}'
+```
+
+**DELETE a town**
 ```
 curl -H 'Content-Type: application/json' -X 'DELETE' 'http://127.0.0.1:8000/api/town/{town_id}'
 ```

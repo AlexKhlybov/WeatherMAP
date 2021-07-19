@@ -3,22 +3,12 @@ from json import dumps, loads
 from sqlalchemy.orm import Session
 
 from app.models.towns import Town
+from icecream import ic
 
 
 def get_all_town(db: Session):
     towns = db.query(Town).all()
-    result = [
-        {
-            "id": town.id,
-            "name": town.name,
-            "longitude": town.longitude,
-            "latitude": town.latitude,
-            "current_weather": town.current_weather,
-            "forecast_weather": loads(town.forecast_weather),
-            "create_at": town.create_at,
-        }
-        for town in towns
-    ]
+    result = [town.get_dict for town in towns]
     return result
 
 
@@ -26,11 +16,12 @@ def create_town(db: Session, data):
     town = Town(name=data.name, longitude=data.longitude, latitude=data.latitude, forecast_weather=dumps("None"))
     db.add(town)
     db.commit()
-    return town
+    return town.get_dict
 
 
 def get_town(db: Session, id: int):
-    return db.query(Town).filter(Town.id == id).first()
+    town = db.query(Town).filter(Town.id == id).first()
+    return town.get_dict
 
 
 def update_town(db: Session, id: int, data: dict):

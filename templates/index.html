@@ -10,29 +10,36 @@
 <body>
 
     <div class="container">
-        <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Town</th>
-                <th scope="col">Fact</th>
-                {% for k, v in towns[0].forecast_weather.items() %}
-                    <th scope="col">{{ k }}</th>
-                {% endfor %}
-              </tr>
-            </thead>
-            <tbody>
-                {% for town in towns %}
-                    <tr>
-                        <th scope="row">{{ town.id }}</th>
-                        <td>{{ town.name }}</td>
-                        <td>{{ town.current_weather }}</td>
-                        {% for k, v in town.forecast_weather.items() %}
-                            <td class="text-center">{{ v }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-          </table>
+        {% if towns|length < 1 %}
+            <h3 class="mt-5 mb-5">В базе нет ни одного города для отображени!</h3>
+            <p>Сначала внесите необходимые города в базу, потом перейдите на главную страницу для обзора прогноза!</p>
+            <p>Добавить города можно тут - <a href="http://127.0.0.1:8000/docs#/default/town_create_api_town__post">Swagger UI</a>.</p>
+        {% else %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Town</th>
+                    <th scope="col">Fact</th>
+                    {% for k, v in towns[0].forecast_weather.items() %}
+                        <th scope="col">{{ k }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                    {% for town in towns %}
+                        <tr>
+                            <th scope="row">{{ town.id }}</th>
+                            <td>{{ town.name }}</td>
+                            <td>{{ town.current_weather }}</td>
+                            {% for k, v in town.forecast_weather.items() %}
+                                <td class="text-center">{{ v }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </div>
     
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
