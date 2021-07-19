@@ -37,7 +37,7 @@ responses = {
 @app.post("/api/town/", response_model=DetailTownModel, status_code=201)
 async def town_create(town: TownModel, db: Session = Depends(get_db)):
     town = create_town(db=db, data=town)
-    # await get_weater(db=db, item=town)
+    await get_weater(db=db, item=town)
     return town
 
 
@@ -65,8 +65,11 @@ async def town_create(town: TownModel, db: Session = Depends(get_db)):
         },
     },
 )
-def town_list(db: Session = Depends(get_db)):
-    return get_all_town(db=db)
+async def town_list(db: Session = Depends(get_db)):
+    towns = get_all_town(db=db)
+    for town in towns:
+        await get_weater(db=db, item=town)
+    return towns
 
 
 @app.get("/api/town/{town_id}", responses={
@@ -126,5 +129,4 @@ async def get_home(request: Request, db: Session = Depends(get_db)):
     towns = get_all_town(db=db)
     for town in towns:
         await get_weater(db=db, item=town)
-    towns = get_all_town(db=db)
     return templates.TemplateResponse("index.html", {"request": request, "towns": towns})

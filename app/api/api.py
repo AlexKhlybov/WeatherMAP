@@ -1,9 +1,8 @@
-from json import dumps, loads
+from json import dumps
 
 from sqlalchemy.orm import Session
 
 from app.models.towns import Town
-from icecream import ic
 
 
 def get_all_town(db: Session):
@@ -19,13 +18,13 @@ def create_town(db: Session, data):
     return town.get_dict
 
 
-def get_town(db: Session, id: int):
-    town = db.query(Town).filter(Town.id == id).first()
+def get_town(db: Session, town_id: int):
+    town = db.query(Town).filter(Town.id == town_id).first()
     return town.get_dict
 
 
-def update_town(db: Session, id: int, data: dict):
-    town = db.query(Town).filter(Town.id == id).first()
+def update_town(db: Session, town_id: int, data: dict):
+    town = db.query(Town).filter(Town.id == town_id).first()
     town.name = data.name
     town.longitude = data.longitude
     town.latitude = data.latitude
@@ -34,7 +33,7 @@ def update_town(db: Session, id: int, data: dict):
     return town
 
 
-def delete_town(db: Session, id: int):
-    task = db.query(Town).filter(Town.id == id).first()
+def delete_town(db: Session, town_id: int):
+    task = db.query(Town).filter(Town.id == town_id).first()
     db.delete(task)
     db.commit()
