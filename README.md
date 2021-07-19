@@ -34,9 +34,15 @@ Be sure to enter the `YANDEX_KEY`, otherwise the application will not work. You 
 ## Getting started
 clone:
 ```
-$ git clone https://github.com/AlexKhlybov/TodoGARPIX.git
-$ cd TodoGARPIX
+$ git clone https://github.com/AlexKhlybov/WeatherMAP.git
+$ cd WeatherMAP
 ```
+
+At this stage, you need to switch to the dev branch
+```
+$ git checkout dev
+```
+
 create & activate virtual env then install dependency
 
 with venv/virtualenv + pip:
