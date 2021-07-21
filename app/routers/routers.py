@@ -34,11 +34,11 @@ responses = {
 }
 
 
-@app.post("/api/town/", response_model=DetailTownModel, status_code=201)
+@app.post("/api/town/", status_code=201)
 async def town_create(town: TownModel, db: Session = Depends(get_db)):
-    town = create_town(db=db, data=town)
-    await get_weater(db=db, item=town)
-    return town
+    town_el = create_town(db=db, data=town)
+    town_aw = await get_weater(db=db, item=town_el)
+    return town_aw.get_dict
 
 
 @app.get(
@@ -67,9 +67,7 @@ async def town_create(town: TownModel, db: Session = Depends(get_db)):
 )
 async def town_list(db: Session = Depends(get_db)):
     towns = get_all_town(db=db)
-    for town in towns:
-        await get_weater(db=db, item=town)
-    return towns
+    return [(await get_weater(db=db, item=town)).get_dict for town in towns]
 
 
 @app.get(
@@ -108,11 +106,11 @@ async def town_detail(town_id: int, db: Session = Depends(get_db)):
     if town is None:
         raise HTTPException(status_code=404, detail="Town not found")
     else:
-        await get_weater(db=db, item=town)
-        return town
+        town_weater = await get_weater(db=db, item=town)
+        return town_weater.get_dict
 
 
-@app.put("/api/town/{town_id}", response_model=DetailTownModel, status_code=202, responses={**responses})
+@app.put("/api/town/{town_id}", status_code=202, responses={**responses})
 def town_update(town_id: int, data: TownModel, db: Session = Depends(get_db)):
     town = get_town(db=db, town_id=town_id)
     if town is None:
@@ -133,6 +131,5 @@ def town_delete(town_id: int, db: Session = Depends(get_db)):
 @app.get("/")
 async def get_home(request: Request, db: Session = Depends(get_db)):
     towns = get_all_town(db=db)
-    for town in towns:
-        await get_weater(db=db, item=town)
-    return templates.TemplateResponse("index.html", {"request": request, "towns": towns})
+    towns_weater = [(await get_weater(db=db, item=town)).get_dict for town in towns]
+    return templates.TemplateResponse("index.html", {"request": request, "towns": towns_weater})

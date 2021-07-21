@@ -19,8 +19,8 @@ class DetailTownModel(TownModel):
     """Return response data"""
 
     id: int
-    current_temp: Optional[str] = None
-    forecast_temp: Optional[str] = None
+    current_temp: str
+    forecast_temp: str
     created_at: datetime = datetime.utcnow()
 
 

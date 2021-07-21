@@ -17,6 +17,7 @@ async def get_weater(db, item):
             town.forecast_weather = helper_forest((await r.json())["forecasts"])
             db.add(town)
             db.commit()
+            return town
 
 
 def helper_forest(items):
