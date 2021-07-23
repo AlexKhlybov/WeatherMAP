@@ -6,44 +6,43 @@
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 </p>
 
-<p align="center">
-  <img src="https://raw.github.com/marcosvbras/todo-list-python/master/images/to-do-list.jpg" alt="Custom image"/>
-</p>
+![Screenshot](icon.png)
 
 
 ## What is this?
-This is a **TodoGARPIX** was completed as part of the test task when applying for an internship at GARPIX.
+An application with the functionality of obtaining weather data by coordinates via API from a third-party service.
 
 
 ## What can?
-- see the list of tasks
-- create a new task
-- detailed task overview
-- change one task
-- delete task
+- see the list of town
+- create a new town
+- detailed town overview
+- change one town
+- delete town
 
 
 ## Environment
 Env file in the root of the project and add the following (example) to it:
 ```
-FLASK_APP=run.py
-FLASK_ENV=testing
+TESTING=False
 
-SECRET_KEY=secretsecretsecretsecretsecretsecretsecretsecretsecret
-POSTGRES_DB=db
-POSTGRES_USER=post
-POSTGRES_PASSWORD=post
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
+WEATHER_LANG="ru-RU"
+YANDEX_KEY="BigSecret!!!"
 ```
-
+Be sure to enter the `YANDEX_KEY`, otherwise the application will not work. You can get it here - [Yandex API Weather](https://yandex.ru/dev/weather/doc/dg/concepts/forecast-info.html).
 
 ## Getting started
 clone:
 ```
-$ git clone https://github.com/AlexKhlybov/TodoGARPIX.git
-$ cd TodoGARPIX
+$ git clone https://github.com/AlexKhlybov/WeatherMAP.git
+$ cd WeatherMAP
 ```
+
+At this stage, you need to switch to the dev branch
+```
+$ git checkout dev
+```
+
 create & activate virtual env then install dependency
 
 with venv/virtualenv + pip:
@@ -53,87 +52,98 @@ $ source env/bin/activate  # use `env\Scripts\activate` on Windows
 $ pip install -r requirements.txt
 ```
 
-Use `docker-compose` to connect the database:
-```
-$ docker-compose up
-```
-or detached mode:
-```
-$ docker-compose up -d
-```
-
 To run the program, type in the console:
 ```
-$ flask run
+$ uvicorn main:app --reload
 ```
 
-We carry out migrations:
+Add records to the database.
+First, let's go to [Swagger UI](http://127.0.0.1:8000/docs#/default/town_create_api_town__post).
+You can copy the entries below or enter your cities:
 ```
-$ flask db stamp head
-$ flask db migrate
-$ flask db upgrade
+{
+    "name": "Ufa",
+    "longitude": 56.4,
+    "latitude": 54.49
+}
+{
+    "name": "Moskow",
+    "longitude": 37.37,
+    "latitude": 55.45
+}
+{
+    "name": "Izhevsk",
+    "longitude": 53.13,
+    "latitude": 56.51
+}
 ```
+
+To view the weather forecast for the entered cities, go to the main page - [Home page](http://127.0.0.1:8000)
+
 
 
 ## REST-API interactions
-Use [Swagger UI](https://swagger.io/tools/swagger-ui/) or [cUrl](https://curl.se/) utility to manipulate tasks. Below is an example of using the cUrl utility:
+Use [Swagger UI](https://swagger.io/tools/swagger-ui/) or [cUrl](https://curl.se/) utility to manipulate towns. Below is an example of using the cUrl utility:
 
-**GET the List of todos**
+**GET the List of towns**
 ```
-curl -H 'Content-Type: application/json' -X 'GET' 'http://127.0.0.1:5000/api/task/'
-```
-
-**GET an individual todo**
-```
-curl -H 'Content-Type: application/json' -X 'GET' 'http://127.0.0.1:5000/api/task/<ID>'
+curl -H 'Content-Type: application/json' -X 'GET' 'http://127.0.0.1:8000/api/town/'
 ```
 
-**POST a todo**
+**GET an individual town**
 ```
-curl -H 'Content-Type: application/json' -d '{"title":"Dinner", "content":"Having Dinner"}' -X 'POST' 'http://127.0.0.1:5000/api/task/'
-```
-
-**UPDATE a todo**
-```
-curl -H 'Content-Type: application/json' -d '{"title":"Dinner", "content":"Having Dinner"}' -X 'PUT' 'http://127.0.0.1:5000/api/task/<ID>'
+curl -H 'Content-Type: application/json' -X 'GET' 'http://127.0.0.1:8000/api/town/{town_id}'
 ```
 
-**DELETE a todo**
+**POST a town**
 ```
-curl -H 'Content-Type: application/json' -X 'DELETE' 'http://127.0.0.1:5000/api/task/<ID>'
+curl -H 'Content-Type: application/json' -d '{"name": "Ufa", "longitude": 56.4, "latitude": 54.49}' -X 'POST' 'http://127.0.0.1:8000/api/town/'
+```
+
+**UPDATE a town**
+```
+curl -H 'Content-Type: application/json' -d '{"name": "Ufa", "longitude": 56.4, "latitude": 54.49}' -X 'PUT' 'http://127.0.0.1:8000/api/town/{town_id}'
+```
+
+**DELETE a town**
+```
+curl -H 'Content-Type: application/json' -X 'DELETE' 'http://127.0.0.1:8000/api/town/{town_id}'
 ```
 
 
-## UnitTEST
-To run the tests, you can use [unittest2](https://pypi.org/project/unittest2/) as following:
+## Pytest
+To run the tests, you can use [pytest](https://docs.pytest.org/) as following:
 
-First, let's change the mode to test, to do this, in the `.env` file, replace the value of the `FLASK_ENV` variable:
+First, let's change the mode to test, to do this, in the `.env` file, replace the value of the `TESTING` variable:
 ```
 ...
-FLASK_ENV=testing
+TESTING=True
 ...
 ```
 
 Next, we raise the application with the command familiar to us:
 ```
-$ flask run
+$ pytest
 ```
 
 ```bash
-$ python3 -m unittest discover tests
-.......
-----------------------------------------------------------------------
-Ran 7 tests in 0.200s
+$ pytest
+============================= test session starts ==============================
+platform darwin -- Python 3.9.6, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
+rootdir: /Users/macak/Documents/py_proj/WeatherMAP
+collected 9 items                                                              
 
-OK
+tests/test_api.py .........                                              [100%]
+
+============================== 9 passed in 1.08s ===============================
 ```
 
 
 ## ATTENTION! 
-To run in development mode, replace the variable with `development`:
+To run in development mode, replace the variable with `False`:
 ```
 ...
-FLASK_ENV=development
+TESTING=False
 ...
 ```
 
